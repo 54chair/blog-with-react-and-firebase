@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import "./CreatePost.css"
 import { addDoc, collection } from "firebase/firestore"
 import { db, auth } from '../firebase';
 import { useNavigate } from "react-router-dom";
 
-const CreatePost = () => {
+const CreatePost = ({ isAuth }) => {
   const [title, setTitle] = useState();
   const [postText, setPostText] = useState();
   const navigate = useNavigate();
@@ -20,6 +20,12 @@ const CreatePost = () => {
     })
     navigate("/");
   };
+
+  useEffect(() => {
+    if(!isAuth) {
+      navigate("/login")
+    }
+  }, [])
 
   return (
     <div className="createPostPage">
